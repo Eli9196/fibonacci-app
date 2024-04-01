@@ -1,30 +1,29 @@
-document.getElementById('button').addEventListener('click', function() {
-    let input = document.getElementById('input').value;
-    let output = document.getElementById('output');
-    let sequence = [];
+// Function to calculate the Fibonacci sequence
+function fibonacci(n) {
+    const sequence = [0, 1];
+    for (let i = 2; i < n; i++) {
+        sequence.push(sequence[i - 1] + sequence[i - 2]);
+    }
+    return sequence;
+}
+
+// Function to handle button click event
+function handleButtonClick() {
+    const input = document.getElementById('input').value;
+    const output = document.getElementById('output');
 
     try {
-        if (input < 0) {
-            throw new Error('Input cannot be negative');
-        } else if (input === '') {
-            throw new Error('Input cannot be empty');
-        } else if (isNaN(input)) {
-            throw new Error('Input must be a number');
-        } else {
-            for (let i = 0; i < input; i++) {
-                if (i === 0) {
-                    sequence.push(0);
-                } else if (i === 1) {
-                    sequence.push(1);
-                } else {
-                    sequence.push(sequence[i - 1] + sequence[i - 2]);
-                }
-            }
+        const n = parseInt(input);
+        if (isNaN(n) || n < 0) {
+            throw new Error('Input must be a non-negative number');
         }
-        output.innerHTML = sequence.join(', ');
+
+        const sequence = fibonacci(n);
+        output.textContent = 'Fibonacci sequence: ' + sequence.join(', ');
     } catch (error) {
-        output.innerHTML = error;
-    } finally {
-        alert(`The ${input}th number in the fibonacci sequence is ${sequence[input - 1]}`);
+        output.textContent = error.message;
     }
-});
+}
+module.exports = {
+    fibonacci,
+};
